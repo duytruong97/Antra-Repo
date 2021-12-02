@@ -1,0 +1,307 @@
+-- Short Answer Questions
+
+1) 
+
+A result set is a set of rows from a database that has the data itself, and the names, the types, and sizes of each coloumn
+
+2)
+
+The Union removes the dublicate rows, while the Union all does not
+
+3) 
+
+There are INTERSECT and EXCEPT 
+
+4)
+
+JOIN combines data from many tables based on matched condition between them into new columns 
+Union combines the result set of 2 or more select statements into new rows
+
+5)
+
+INNER JOIN returns the records that have matching values in both tables 
+FULL JOIN returns all the records from both tables, even with no matching values
+
+6)
+
+LEFT JOIN returns all the record from the left table and the matched record from the right table, leaving the non-matching record in the right table NULL.
+OUTTER JOIN returns all rows from the left and right tables and return NULL when the join condition are not met.
+
+7)
+
+CROSS JOIN creats  the catesian product of 2 tables.
+
+8) 
+
+HAVING appies only to group as a whole, and it only filters aggregate functions. HAVING can only be used with SELECT
+WHERE applies to individual rows, and can be used with SELECT, UPDATE, INSERT, and DELETE
+
+9)
+
+Yes there can be. 
+
+
+-- QUERIES
+
+1)
+
+SELECT COUNT(p.ProductID) AS TotalProducts
+FROM Production.Product p
+
+2)
+
+SELECT COUNT(p.ProductID) AS TotalSubProducts
+FROM Production.Product p
+WHERE p.ProductSubcategoryID IS NOT NULL
+
+3)
+
+
+SELECT p.ProductSubcategoryID, COUNT(p.ProductID) AS CountedProducts
+FROM Production.Product p
+WHERE p.ProductSubcategoryID IS NOT NULL
+GROUP BY p.ProductSubcategoryID
+
+4)
+
+
+SELECT COUNT(p.ProductID) AS TotalNonSubProducts
+FROM Production.Product p
+WHERE p.ProductSubcategoryID IS NULL
+
+5)
+
+SELECT ProInv.ProductID, SUM(ProInv.Quantity) AS InventorySum
+FROM Production.ProductInventory ProInv
+GROUP BY ProInv.ProductID
+ORDER BY ProInv.ProductID
+
+
+6)
+
+
+SELECT ProInv.ProductID, SUM(ProInv.Quantity) AS TheSum
+FROM Production.ProductInventory ProInv
+WHERE ProInv.LocationID = 40
+GROUP BY ProInv.ProductID
+HAVING SUM(ProInv.Quantity) < 100
+
+
+7)
+
+SELECT ProInv.Shelf, ProInv.ProductID, SUM(ProInv.Quantity) AS TheSum
+FROM Production.ProductInventory ProInv
+WHERE ProInv.LocationID = 40
+GROUP BY ProInv.Shelf, ProInv.ProductID
+HAVING SUM(ProInv.Quantity) < 100
+
+
+8)
+
+SELECT ProInv.ProductID, AVG(ProInv.Quantity) AS Average
+FROM Production.ProductInventory ProInv
+WHERE ProInv.LocationID = 10
+GROUP BY ProInv.ProductID
+
+9)
+
+SELECT ProInv.ProductID, ProInv.Shelf, AVG(ProInv.Quantity) AS TheAvg
+FROM Production.ProductInventory ProInv
+GROUP BY ProInv.ProductID, ProInv.Shelf
+
+
+10)
+
+SELECT ProInv.ProductID, ProInv.Shelf, AVG(ProInv.Quantity) AS TheAvg
+FROM Production.ProductInventory ProInv
+WHERE ProInv.Shelf NOT like 'N/A'
+GROUP BY ProInv.ProductID, ProInv.Shelf
+
+
+11)
+
+
+SELECT p.Color, p.Class, COUNT(*) AS TheCount, AVG(p.ListPrice) AS AvgPrice
+FROM Production.Product p
+WHERE p.Class IS NOT NULL AND p.Color IS NOT NULL
+GROUP BY p.Class, p.Color
+
+
+12)
+
+SELECT CR.Name AS Country, SP.Name Province
+FROM Person.CountryRegion CR JOIN Person.StateProvince SP
+ON CR.CountryRegionCode = SP.CountryRegionCode
+
+
+13)
+
+SELECT CR.Name AS Country, SP.Name AS Province
+FROM Person.CountryRegion CR JOIN Person.StateProvince SP
+ON CR.CountryRegionCode = SP.CountryRegionCode
+WHERE CR.Name NOT IN ('Germany', 'Canada')
+
+
+14)
+
+SELECT DISTINCT p.ProductID, p.ProductName
+FROM Orders o
+JOIN
+[Order Details] od
+ON o.OrderID =  od.OrderID
+JOIN 
+Products p
+ON od.ProductID = p.ProductID
+WHERE DATEDIFF(year, o.OrderDate, GETDATE())< 25;
+
+
+15)
+
+SELECT TOP 5 o.ShipPostalCode, SUM(od.Quantity) AS quantity 
+FROM 
+Orders o
+JOIN
+[Order Details] od
+ON o.OrderID =  od.OrderID
+WHERE o.ShipPostalCode IS NOT NULL
+GROUP BY ShipPostalCode
+ORDER BY quantity DESC;
+
+
+16)
+
+SELECT TOP 5 o.ShipPostalCode, SUM(od.Quantity) AS quantity 
+FROM Orders o
+JOIN
+[Order Details] od
+ON o.OrderID =  od.OrderID
+WHERE o.ShipPostalCode IS NOT NULL AND DATEDIFF(year, o.OrderDate, GETDATE())< 25
+GROUP BY ShipPostalCode
+ORDER BY quantity DESC;
+
+17)
+
+SELECT c.City, COUNT(c.CustomerID) AS TotalCustomers
+FROM Customers c
+GROUP BY c.City
+
+
+18)
+
+
+SELECT c.City, COUNT(c.CustomerID) AS TotalCustomers
+FROM Customers c
+GROUP BY c.City
+HAVING COUNT(c.CustomerID) > 2
+
+
+19)
+
+SELECT DISTINCT ContactName, o.OrderDate 
+FROM 
+Orders o
+INNER JOIN 
+Customers c
+ON o.CustomerID = c.CustomerID
+WHERE o.OrderDate > '1998-1-1';
+
+
+20)
+
+SELECT c.ContactName, MAX(o.OrderDate) AS MostRecentOrderDate
+FROM Customers c JOIN Orders o ON c.CustomerId = o.CustomerId
+GROUP BY c.ContactName
+
+21)
+
+SELECT c.ContactName, SUM(od.Quantity) AS TotalProducts FROM 
+Customers c 
+JOIN 
+Orders o 
+ON c.CustomerID = o.CustomerID
+JOIN 
+[Order Details] od
+ON o.OrderID = od.OrderID
+GROUP BY c.CustomerID, c.CompanyName, c.ContactName
+ORDER BY totalproducts;
+
+
+
+22)
+
+SELECT c.ContactName, SUM(od.Quantity) AS TotalProducts FROM 
+Customers c 
+JOIN 
+Orders o 
+ON c.CustomerID = o.CustomerID
+JOIN 
+[Order Details] od
+ON o.OrderID = od.OrderID
+GROUP BY c.CustomerID, c.CompanyName, c.ContactName
+HAVING SUM(od.Quantity) > 100
+ORDER BY totalproducts;
+
+
+23)
+
+
+SELECT DISTINCT sup.CompanyName AS [Supplier Company Name], ship.CompanyName AS [Shipping Company Name]
+FROM Orders o
+JOIN 
+[Order Details] od
+ON 
+o.OrderID = od.OrderID
+JOIN 
+Products p 
+ON od.ProductID = p.ProductID
+JOIN 
+Suppliers sup 
+ON p.SupplierID = sup.SupplierID
+JOIN 
+Shippers ship 
+ON o.ShipVia = ship.ShipperID;
+
+
+
+24) 
+
+
+SELECT o.OrderDate, p.ProductName
+FROM Orders o 
+LEFT JOIN 
+[Order Details] od 
+ON od.OrderID = o.OrderID
+JOIN 
+Products p 
+ON p.ProductID = od.ProductID
+GROUP BY o.OrderDate, p.ProductName
+
+
+25) 
+
+SELECT e1.FirstName+' '+e1.LastName AS EM1, e2.FirstName+' '+e2.LastName AS EM2, e1.Title
+FROM Employees e1 
+JOIN Employees e2 
+ON e1.Title = e2.Title
+WHERE e1.EmployeeID != e2.EmployeeID
+ORDER BY Title;
+
+26)
+
+SELECT Manager.FirstName, COUNT(Emp.EmployeeID) AS TotalReports
+FROM Employees Manager
+JOIN 
+Employees Emp
+ON Emp.ReportsTo = Manager.EmployeeID
+GROUP BY Manager.FirstName
+HAVING COUNT(Emp.EmployeeID) > 2
+
+
+27) 
+
+
+SELECT c.City, c.CompanyName AS Name, c.ContactName, 'Customer' AS Type
+FROM Customers c
+UNION
+SELECT s.City, s.CompanyName AS Name, s.ContactName, 'Supplier' AS Type
+FROM Suppliers s;
