@@ -1,0 +1,129 @@
+---- SHORT ANSWER QUESTIONS
+
+1) 
+
+I would prefer using JOINS, for it has better perfomance
+
+2)
+
+CTE means Common table expressions. I can be used to reference a result set. 
+
+3)
+
+A variable to store data temporarily, Their scope is in the current batch only, and they are stored in tempDb
+
+4)
+
+DELETE statement is used to remove some or all the records from a table, while TRUNCATE statement deletes entire rows from a table.TRUNCATE is better in performance. DELETE removes rows one at a time, while TRUNCATE removes all rows in a table by deallocating the pages that are used to store the table data
+
+
+5) 
+
+Identity column is used to generate auto incremental values 
+
+DELETE retains the identity and does not reset it to the seed value
+TRUNCATE resets the identity to its seed value
+
+
+---- QUERIES
+
+1)
+
+SELECT DISTINCT c.City
+FROM Customers c
+JOIN Employees e
+ON c.City = e.City
+
+2)
+
+a) 
+SELECT DISTINCT c.City
+FROM Customers c
+WHERE c.City NOT IN(
+SELECT e.city 
+FROM Employees e
+)
+
+b)
+SELECT c.City
+FROM Customers c
+EXCEPT
+SELECT e.city 
+FROM Employees e
+
+3)
+
+SELECT p.ProductID, p.ProductName, COUNT(od.OrderID) AS TotalOrders
+FROM Products p 
+JOIN [Order Details] od
+ON p.ProductID = od.ProductID
+GROUP  BY p.ProductID, p.ProductName
+ORDER BY ProductID
+
+4)
+
+SELECT DISTINCT c.City, COUNT(od.OrderID) AS TotalOrders
+FROM Customers c 
+JOIN Orders o
+ON c.City = o.ShipCity
+JOIN [Order Details] od
+ON od.OrderID = o.OrderID
+JOIN Products p 
+ON p.ProductID = od.ProductID
+GROUP BY c.City
+ORDER BY c.city
+
+5)
+
+SELECT DISTINCT c.City, COUNT(c.CustomerID) AS NumCustomers
+FROM Customers c
+GROUP BY c.City
+HAVING COUNT(c.CustomerID) > 1
+
+6)
+
+
+7)
+
+
+SELECT DISTINCT c.ContactName, c.City
+FROM Customers c
+JOIN Orders o
+ON c.CustomerID = o.CustomerID
+WHERE c.City != o.ShipCity
+
+
+8)
+
+
+11) 
+
+Use DISTINCT keyword
+
+12)
+
+SELECT emp.empid 
+FROM Employee emp
+WHERE emp.empid NOT IN (
+SELECT DISTINCT emp2.mgrid
+FROM Employee emp2
+)
+
+13)
+
+SELECT d.deptname, COUNT(emp.empid)
+FROM Dept d
+LEFT JOIN Employee emp
+ON emp.depid = d.deptid
+GROUP BY d.deptname
+HAVING COUNT(emp.empid) = MAX(COUNT(emp.empid))
+ORDER BY d.deptname
+
+14)
+
+SELECT TOP 3 d.deptname, emp.empid, MAX(emp.salary) 
+FROM Dept d 
+JOIN Employee emp
+ON emp.deptid = d.deptid
+GROUP BY d.deptname, emp.empid
+ORDER BY emp.salary DESC
