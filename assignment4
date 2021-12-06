@@ -1,0 +1,151 @@
+--Short-answer questions 
+
+1)
+
+View is a virtual table. It is not an actual table and contains no date
+
+The usage of View is to hide data and only display certain information to the users.
+
+2)
+
+Since a view does not hold any data, you cannot use it to modify the data.
+
+3)
+
+Store prodcedure is a prepared SQP query that wa can save in the database and reuse. We use it when we need to run a certain combination of quesries frequesntly without typing from scratch 
+
+4)
+
+View displays data stored in the database tables, while a stored procedure is a group of statements that can be executed and reused.
+
+5)
+
+The function must return a value, but in Stored Procedure it is optional. Fuctions call be called from a procedure, but not vice versa.
+
+6)
+
+Store procedure can return multiple result sets.
+
+7)
+
+It is possible, if the store procedure has a return value.
+
+
+8) Trigger is a set of instructions that run when an event occurs. There are 3 types of triggers: DML trigger, DDL trigger, and Logon Trigger.
+
+9)
+
+trigger is a stored procedure that runs automatically when various events happen, while store procedure can be call explicitly from the user.
+
+
+--Queries questions 
+
+1)
+
+CREATE VIEW view_product_order_Truong AS
+SELECT ProductID, SUM(Quantity) AS QuantityOrdered 
+FROM [order details]
+GROUP BY ProductID
+
+2)
+
+CREATE PROC sp_product_order_quantity_Truong
+@prodID int,
+@totalquan int out
+AS
+BEGIN
+SELECT @totalquan = view_product_order_TRUONG.QunatityOrdered
+FROM view_product_order_TRUONG 
+WHERE @prodID = view_product_order_TRUONG.ProductID
+END
+
+
+
+BEGIN
+DECLARE @numOrder int
+EXEC sp_product_order_quantity_Truong 46, @numOrder out
+print @numOrder
+END
+
+3)
+
+CREATE PROC sp_product_order_city_Truong
+@prodName varchar(20)
+AS
+BEGIN
+SELECT TOP 5 o.ShipCity, SUM(od.ProductID) AS TotalProductOrdered
+FROM Orders o
+JOIN [Order Details] od
+ON o.OrderID = od.OrderID
+JOIN Products p
+ON p.ProductID = od.ProductID
+WHERE p.ProductName = @prodName
+GROUP BY o.ShipCity
+ORDER BY SUM(od.ProductID) DESC
+END
+
+
+
+
+
+BEGIN
+DECLARE @name varchar(20)
+EXEC sp_product_order_city_Truong 'Chai'
+print @name
+END
+
+
+4)
+
+CREATE TABLE city_Truong(
+id int PRIMARY KEY,
+Name Varchar(20)
+)
+
+CREATE TABLE people_Truong(
+id int PRIMARY KEY,
+Name Varchar(20),
+City int FOREIGN KEY REFERENCES city_Truong(id) on DELETE SET NULL
+)
+
+
+INSERT INTO city_Truong VALUES(1, 'Seattle')
+INSERT INTO city_Truong VALUES(2, 'Green Bay')
+
+SELECT * FROM city_Truong
+
+INSERT INTO people_Truong VALUES(1, 'Aaron Rodgers', 2)
+INSERT INTO people_Truong VALUES(2, 'Russell Wilson', 1)
+INSERT INTO people_Truong VALUES(3, 'Jody Nelson', 2)
+
+SELECT * FROM people_Truong
+
+
+DELETE FROM city_Truong WHERE Name like 'Seattle'
+
+DROP TABLE people_Truong
+DROP TABLE city_Truong
+
+
+5)
+
+CREATE PROC sp_birthday_employees_Truong 
+AS
+BEGIN
+SELECT e.FirstName, e.LastName, e.BirthDate
+INTO birthday_employees_Truong
+FROM Employees e
+WHERE MONTH(e.BirthDate) = 2
+END
+
+EXEC sp_birthday_employees_Truong 
+
+SELECT * FROM birthday_employees_Truong
+
+DROP TABLE birthday_employees_Truong
+
+
+6)
+
+WE can use MINUS to check for mismatch data between tables 
+
