@@ -1,0 +1,248 @@
+Introduction to C# and Data Types 
+
+Understand Data Types
+
+Test your Knowledge 
+
+1)
+	- String
+	- Float 
+	- Integer
+	- String
+	- Decimal 
+	- String
+	- Float
+	- Integer
+	- Long
+	- Integer 
+
+2)
+
+	- Value types will directly hold the data, while reference type will only hold the memory location for the value
+	- Value types are stored in Stack memory, while reference types are stored in heap memory
+	- Value type will not be collected by garbage collector, while reference type will be.
+
+	- Boxing is the process of converting value type to reference type
+	- Unboxing is the process of converting reference type to value type
+
+3)
+	
+	Managed resources are those managed by the runtime and are under its direct control, while unmanaged resources are not 
+
+
+4) 
+	
+	- To remove un-referenced/used variable to reserve the memory 
+
+
+
+
+Practice number sizes and ranges 
+
+1)
+
+            Console.WriteLine("Size of sbyte = {0}, ranging from {1} to {2}", sizeof(sbyte), sbyte.MinValue, sbyte.MaxValue);
+            Console.WriteLine("Size of byte = {0}, ranging from {1} to {2}", sizeof(byte), byte.MinValue, byte.MaxValue);
+            Console.WriteLine("Size of short = {0}, ranging from {1} to {2}", sizeof(short), short.MinValue, short.MaxValue);
+            Console.WriteLine("Size of ushort = {0}, ranging from {1} to {2}", sizeof(ushort), ushort.MinValue, ushort.MaxValue);
+            Console.WriteLine("Size of int = {0}, ranging from {1} to {2}", sizeof(int), int.MinValue, int.MaxValue);
+            Console.WriteLine("Size of uint = {0}, ranging from {1} to {2}", sizeof(uint), uint.MinValue, uint.MaxValue);
+            Console.WriteLine("Size of long = {0}, ranging from {1} to {2}", sizeof(long), long.MinValue, long.MaxValue);
+            Console.WriteLine("Size of ulong = {0}, ranging from {1} to {2}", sizeof(ulong), ulong.MinValue, ulong.MaxValue);
+            Console.WriteLine("Size of float = {0}, ranging from {1} to {2}", sizeof(float), float.MinValue, float.MaxValue);
+            Console.WriteLine("Size of double = {0}, ranging from {1} to {2}", sizeof(double), double.MinValue, double.MaxValue);
+            Console.WriteLine("Size of decimal = {0}, ranging from {1} to {2}", sizeof(decimal), decimal.MinValue, decimal.MaxValue);
+
+2)
+
+		static void CenturyConverer(int num)
+            {
+                long cent = num;
+                Console.WriteLine("{0} centuries = {1} years = {2} days = {3} hours = {4} minutes = {5} seconds = {6} miliseconds = {7} microseconds = {8} nano seconds",
+                    num, num*100, num*36524, num*876576, num*52594560, num*3155673600, num*3155673600000, num*3155673600000000, num*315673600000000000
+                    );
+                
+            }            
+
+
+Controlling Flow and Converting Types
+
+1)
+
+There will be an error for dividing by constant 0 
+
+2)
+
+It will out as infinity 
+
+3)
+
+When overflowing an int variable, if checked, an OverFlowException is thrown. If unchecked, most significant beits are decarded. 
+
+4)
+
+x = y++: the value of y will be increament after aisigning its value to y
+x = ++y: the value of y will be increament before aisigning its value to y
+
+5)
+
+The break statement terminate the loop
+The continute statement terminates the current loop iteration and returns control to the loop statement
+The return statement returns the output from the current loop interation and exits out of the loop
+
+6)
+
+The 3 parts are: the initialization, the condition, and the advancement to the next iteration.
+
+Of those 3, the condition is not requiredm while the other 2 are.
+
+7)
+
+= is used to assign a value to a variable, while == is used to compare the values between 2 variables.
+
+8)
+
+It does compile and will run as an infinite loop 
+
+9)
+
+The _ represents the defaut keyword
+
+10)
+
+The IEnumerable interface
+
+
+Practice loops and operators
+
+1)
+
+
+static void FizzBuzzis()
+{
+    for(int i = 0; i < 100; i++)
+    {
+        if (i % 5 == 0 && i % 3 == 0)
+        {
+            Console.WriteLine("fizzbuzz");
+        }
+        else if (i%3 == 0)
+        {
+            Console.WriteLine("fizz");
+        }
+        else if(i%5 == 0)
+        {
+            Console.WriteLine("buzz");
+        }
+        else { Console.WriteLine(i); 
+        }
+        
+    }
+}
+
+
+
+The code will run infinitely because of the byte data type in the loop condition 
+
+
+static void GuessNum()
+{
+    int correctNumber = new Random().Next(3) + 1;
+    Console.WriteLine(correctNumber.ToString());
+    Console.WriteLine("Guess the number from 1 to 3");
+    int guessedNumber = int.Parse(Console.ReadLine());
+    if (guessedNumber < 1 || guessedNumber > 3)
+    {
+        Console.WriteLine("Out side of range!");
+    }
+    else if (guessedNumber < correctNumber)
+    {
+        Console.WriteLine("Low");
+    }
+    else if (guessedNumber > correctNumber)
+    {
+        Console.WriteLine("High");
+    }
+    else
+    {
+        Console.WriteLine("You got it right!");
+    }
+
+}
+
+
+2)
+
+static void printPy()
+{
+    for (int i = 0; i < 6; i++)
+    {
+        for (int j = 1; j <= 5 - i; j++)
+            Console.Write(" ");
+        for (int j = 1; j <= 2 * i - 1; j++)
+            Console.Write("*");
+        Console.Write("\n");
+    }
+}
+
+3
+
+
+ //the same as question 1
+
+
+
+4
+
+static void simpleProgram()
+{
+    DateTime birthdate = new DateTime(1997, 06, 11);
+    DateTime todaysDate = new DateTime(2021, 12, 08);
+    int result = (todaysDate.Date - birthdate.Date).Days;
+    Console.WriteLine("You are " + result.ToString() + " days old");
+}
+
+5)
+
+static void greeting()
+{
+    int curTime = DateTime.Now.Hour;
+    if(curTime < 12 && curTime > 5)
+    {
+        Console.WriteLine("Good morning!");
+    }
+    if (curTime < 16 && curTime >= 12)
+    {
+        Console.WriteLine("Good afternoon!");
+    }
+    if (curTime < 19 && curTime >= 16)
+    {
+        Console.WriteLine("Good evening!");
+    }
+    if (curTime < 24 && curTime >= 19)
+    {
+        Console.WriteLine("Night!");
+    }
+    if (curTime <= 5 && curTime >= 0)
+    {
+        Console.WriteLine("It's quite late...");
+    }
+}
+
+
+6)
+
+static void printIncr()
+{
+    for(int i = 1; i < 5; i++)
+    {
+        for(int j = 0; j*i < 25; j++)
+        {
+            Console.Write(j*i + " ");
+        }
+        Console.WriteLine();
+    }
+}
+
+
+
