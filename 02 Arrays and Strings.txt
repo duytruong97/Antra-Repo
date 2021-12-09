@@ -1,0 +1,31 @@
+02 Arrays and Strings 
+
+Test your Knowledge 
+
+1)
+
+If the string remains unchanged, use the String class object because it's immutable, while if the string needs to be changed, StringBuilder is used 
+
+2)
+
+Array class is the base class for all the arrays in C#
+
+3)
+
+There all many algorithms to sort an arrays. Those are Selection Sort, Bubble Sort, MErge Sort, Radix Sort, Insertion Sort, and more 
+
+4)
+
+I can use the .Length() function/property to return the legnth of the array
+
+5)
+
+Yes you can, if the data type is defined as object
+
+6)
+
+Clone() makes a dublicate from the original array, while CopyTo() copies all the elements from the original array and paste it to another array at a given index
+
+
+Practice Arrays
+
