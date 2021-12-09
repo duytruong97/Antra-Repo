@@ -29,3 +29,89 @@ Clone() makes a dublicate from the original array, while CopyTo() copies all the
 
 Practice Arrays
 
+
+1)
+
+int[] newArr = new int[10] {1,5,2,3,4,5,7,3,9,2};
+
+int[] newArr2 = new int[newArr.Length];
+
+for(int i = 0; i < newArr.Length; i++)
+{
+    newArr2[i] = newArr[i];
+    Console.WriteLine(newArr[i]);
+    Console.WriteLine(newArr2[i]);
+}
+
+
+2)
+
+static void tobuy(){
+	ArrayList arlist = new ArrayList();
+
+	for (; ; )
+	{
+	   
+	    Console.WriteLine("Enter command (+ item, - item, or -- to clear)):");
+	    String input = Console.ReadLine();
+	    if (input.Length == 1 && input[0] == '-')
+	    {
+	        arlist.Clear();
+	        foreach (string item in arlist)
+	        {
+	            Console.WriteLine(item);
+	        }
+	    }
+	    else if (input[0] == '+')
+	    {
+	        arlist.Add(input.Substring(2));
+	        foreach (string item in arlist)
+	        {
+	            Console.WriteLine(item);
+	        }
+
+	    }
+	    else if (input[0] == '-')
+	    {
+	        arlist.Remove(input.Substring(2));
+	        foreach (string item in arlist)
+	        {
+	            Console.WriteLine(item);
+	        }
+	    }
+
+	}
+
+}
+
+
+
+3)
+
+int[] primes = FindPrimesInRange(1, 100);
+
+
+
+static int[] FindPrimesInRange(int startNum, int endNum)
+    {
+    List<int> primeList = new List<int>();  
+    for(int i = startNum; i < endNum+1; i++){
+        int count = 0;
+        for(int j = startNum; j<= i; j++){
+            if (i%j == 0)
+            {
+                count++;
+            }
+        }
+        if(count == 2)
+        {
+            primeList.Add(i);
+        }
+    }
+    int [] primes = primeList.ToArray();
+    for(int k = 0; k < primes.Length; k++)
+    {
+        Console.Write(primes[k] + " ");
+    }
+    return primes;
+}
