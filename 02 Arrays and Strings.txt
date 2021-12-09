@@ -115,3 +115,98 @@ static int[] FindPrimesInRange(int startNum, int endNum)
     }
     return primes;
 }
+
+
+4)
+
+rotateArr("1 2 4 -5 7", 2);
+
+
+
+
+static void rotateArr(String s, int k)
+{
+    int[] ints = Array.ConvertAll(s.Split(' '), int.Parse);
+    k = k%s.Length;
+    reverse(ints, 0, ints.Length-1);
+    reverse(ints, 0, k - 1);
+    reverse(ints, k, ints.Length-1);
+    for(int i = 0; i < ints.Length; i++)
+    {
+        Console.WriteLine(ints[i]);
+    }
+
+}
+
+static void reverse(int[] nums, int start, int end)
+{
+    while(start < end)
+    {
+        int temp = nums[start];
+        nums[start] = nums[end];
+        nums[end] = temp;
+        start++;
+        end--;
+    }
+}
+
+
+
+
+5)
+
+static int[] findSeq(int[] arr)
+{
+    int CountS = 0;
+    for (int i = 0; i < arr.Length; i++)
+    {
+        for (int j = 1; j < arr.Length; j++)
+        {
+
+        }
+    }
+}
+
+
+6)
+
+
+Practice Strings
+
+1)
+
+
+static void reverseString1(String s)
+{
+    Char[] charArr = s.ToCharArray();
+    int i = 0;
+    int j = charArr.Length-1;
+    while (i < j)
+    {
+        Char temp = charArr[i];
+        charArr[i] = charArr[j];
+        charArr[j] = temp;
+        i++;
+        j--;
+    }
+    foreach (char ch in charArr)
+    {
+        Console.Write(ch);
+    }
+
+}
+
+
+
+static void reverseString2(String s)
+{
+    for(int i = s.Length-1; i >= 0; i--)
+    {
+        Console.Write(s[i]);
+    }
+}
+
+
+
+2)
+
