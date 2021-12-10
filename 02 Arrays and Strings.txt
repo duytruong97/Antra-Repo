@@ -210,3 +210,54 @@ static void reverseString2(String s)
 
 2)
 
+3)
+
+
+4)
+
+static void httpParse(String s)
+{
+    int index = s.IndexOf("://");
+    if(index == -1)
+    {
+        Console.WriteLine("[protocol] = \"\"");
+        int index2 = s.Substring(index).IndexOf("/");
+        if(index2 == -1)
+        {
+            Console.WriteLine(index2 + "case2");
+            Console.WriteLine("[server] = " + s);
+            Console.WriteLine("[resource] = \"\"");
+        }
+        else
+        {
+            Console.WriteLine(index2 + "case3");
+            Console.WriteLine("[server] = " + s.Substring(0, index2));
+            Console.WriteLine("[resource] = " + s.Substring(index2+1));
+        }
+        
+
+
+    }else if (index != -1)
+    {
+        Console.WriteLine("[protocol] = " + s.Substring(0, index));
+        int index2 = s.Substring(index+3).IndexOf("/");
+        Console.WriteLine(index2);
+
+        if (index2 == -1)
+        {
+            Console.WriteLine(index2 + "case4");
+            Console.WriteLine("[server] = " + s.Substring(index+3));
+            Console.WriteLine("[resource] = \"\"");
+        }
+        else
+        {
+            Console.WriteLine(index + "case5");
+            Console.WriteLine(index2+"case5");
+            Console.WriteLine("[server] = " + s.Substring(index));
+            Console.WriteLine("[resource] =  " + s.Substring(index2));
+        }
+
+    }
+   
+    
+}
