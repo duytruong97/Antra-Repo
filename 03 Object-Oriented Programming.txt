@@ -1,0 +1,440 @@
+03 Object-Oriented Programming
+
+
+Test your knowledge
+
+1)
+
+Public: members can be used and accessed anywhere
+
+private: members can only accessed in the current class 
+
+protected: members can be accessed in current classand its subclasses
+
+internal: member can be accessed in current assembly 
+
+Protected Internal: A combination of protected and internal. Can access the protected member only in the same assembly or in a derived class in other assemblies
+
+Private protected access modifier: A combination of the private and protected. Can access member inside the containing class that derives from a containing class, but only in the same assembly.
+
+2)
+
+static: Declares a static member, which belongs to the type itself rather than to a specific object
+
+const: default are static, refers to constants that need to have a value at compile time
+
+readonly: allows the variable to be initilized either at compile time or runtime
+
+3)
+
+A constructor is a special method that shares the same name of the class and does not have a return type, not even void. It's used to create objects of the class and initialize class members 
+
+4)
+
+It indicates that other parts of the class, struct, or interface can be defined in the namespace
+
+5)
+
+A tuple is a data structure that contains a sequence of different data types 
+
+6)
+
+record keyword is used to define a reference type that provides built-in functionality for encasulating data. 
+
+7)
+
+- Method overriding: happens between base class and the derived class; derived class can have different implementations for the same methods
+
+- Method overloading: muiltiple methods in the same class, same name, but different parameters 
+
+8)
+
+A field is a variable of any type that is declared directly in the class, while property is a member that provides a flexible mechanism to read, write, or compute the value ofa private field
+
+9)
+
+
+
+10)
+
+An abstract class allows you to create functionalities that subclasses can either inherit or override, while an interface only allows you to define that funcionality, but not implement it, so classes that extend an interface have to implements those methods.
+
+11)
+
+Interface members implicitly have only public accessibility
+
+12)
+
+True
+
+13)
+
+True
+
+14)
+
+False
+
+15)
+
+True
+
+16)
+
+False
+
+17)
+
+True
+
+18)
+
+True
+
+19)
+
+True
+
+20)
+
+False
+
+21)
+
+True
+
+22)
+
+False
+
+23)
+
+True
+
+
+
+Working with methods 
+
+1)
+
+
+Main(args);
+
+
+
+static void Main(string[] args)
+{
+    int[] numbers = GenerateNumbers();
+    Reverse(numbers);
+    PrintNumbers(numbers);
+}
+
+
+
+
+static int[] GenerateNumbers()
+{
+    int[] intArray = new int[10] {1,2,3,4,5,6,7,8,9,10};
+
+    return intArray;
+}
+
+static void Reverse(int[] numbers)
+{
+    for(int i = 0; i < numbers.Length / 2; i++)
+    {
+        int temp = numbers[i];
+        numbers[i] = numbers[numbers.Length-1-i];
+        numbers[numbers.Length - 1 - i] = temp;
+        
+    }
+
+}
+
+static void PrintNumbers(int[] numbers)
+{
+    for (int j = 0; j < numbers.Length; j++)
+    {
+        Console.Write(numbers[j]+" ");
+    }
+}
+
+
+
+-----------
+
+2)
+
+
+Main(args);
+
+
+
+static void Main(string[] args)
+{
+    Console.WriteLine("First 10 fib numbers: ");
+    for(int i = 1; i < 11; i++)
+    {
+        Console.WriteLine("The Fibonacci of {0} th term  is {1} \n", i, Fib(i));
+    }
+
+    Console.WriteLine("Please enter a number");
+
+    int num1 = Convert.ToInt32(Console.ReadLine());
+
+    Console.WriteLine("The Fibonacci of {0} th term  is {1} \n", num1, Fib(num1));
+}
+
+
+static int Fib(int num)
+{
+    if ((num == 1) || (num == 2))
+    {
+
+        return 1;
+        
+    }
+    else
+    {
+
+        return Fib(num - 1) + Fib(num-2);
+        
+    }
+}
+
+------------
+
+Designing and Building Classes using object-oriented principles
+
+
+1)
+
+
+
+namespace OOP2
+{
+    internal class Person
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public int Age { get; set; }
+
+        public Person(int Id, String Name, int Age)
+        {
+            this.Id = Id;
+            this.Name = Name;
+            this.Age = Age;
+        }
+
+        public virtual void printInfo()
+        {
+            Console.WriteLine("Person ID: {0}, Person's Name: {1}, Person's Age: {2}", Id, Name, Age);
+        }
+        public virtual void task()
+        {
+            Console.WriteLine("Do task");
+        }
+
+
+
+
+    }
+}
+
+
+
+---
+
+
+namespace OOP2
+{
+    internal class Instructor : Person
+    {
+        public Instructor(int Id, string Name, int Age, string v) : base(Id, Name, Age)
+        {
+            this.Department = v;
+        }
+
+        private String Department { get; set; }
+
+        public void printInfo()
+        {
+            Console.WriteLine("Instructor ID: {0}, Instructor's Name: {1}, Instructor's Age: {2}, Instructor's Department: {3}", Id, Name, Age, Department);
+        }
+        public void task()
+        {
+            Console.WriteLine("Give assignments");
+        }
+
+    }
+}
+
+
+---
+
+namespace OOP2
+{
+    internal class Student: Person
+    {
+        private String Year { get; set; }
+        public Student(int Id, string Name, int Age, string v) : base(Id, Name, Age)
+        {
+            this.Year = v;
+        }
+
+        
+
+
+
+    
+
+
+        public void printInfo()
+        {
+            Console.WriteLine("Student ID: {0}, Student's Name: {1}, Student's Age: {2}, Student's Year: {3}", Id, Name, Age, Year);
+        }
+        public void task()
+        {
+            Console.WriteLine("Do assignments");
+        }
+    }
+}
+
+
+---
+
+class Program
+
+
+
+
+
+{
+    static void Main(String[] args)
+    {
+        Student student = new Student(1, "Duy", 24, "Senior");
+        student.printInfo();
+
+        Instructor instructor = new Instructor(2, "Alice", 30, "Math");
+        instructor.printInfo();
+        
+    }
+}
+
+
+
+7)
+
+
+using System;
+
+namespace OOP3
+{
+    class OOP3
+    {
+        static void Main(string[] args)
+        {
+            Color Color1 = new Color(12, 230, 90);
+            Ball Ball1 = new Ball(3, Color1);
+            Console.WriteLine(Ball1.Size);
+            int times = Ball1.CountThrow();
+            Console.WriteLine(times);
+            Ball1.Throw();
+            Ball1.Throw();
+            times = Ball1.CountThrow();
+            Console.WriteLine(times);
+            Ball1.Pop();
+            times = Ball1.CountThrow();
+            Console.WriteLine(times);
+            Console.WriteLine(Ball1.Size); 
+        }
+    }
+}
+
+----
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace OOP3
+{
+    internal class Ball
+    {
+        public int Size { get; set; }
+        public Color Color { get; set; }
+        private int ThrowCount { get; set; }
+
+        public Ball(int S, Color C)
+        {
+            this.Size  = S;
+            this.Color = C;
+            this.ThrowCount = 0;
+        }
+
+        public void Pop()
+        {
+            this.Size = 0;
+        }
+
+        public void Throw()
+        {
+            if(this.Size != 0)
+            {
+                this.ThrowCount++;
+            }
+        }
+
+        public int CountThrow()
+        {
+            return this.ThrowCount;
+        }
+    }
+}
+
+---
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace OOP3
+{
+    internal class Color
+    {
+        private int Red { get; set; }
+        private int Green { get; set; }
+        private int Blue { get; set; }
+        private int Alpha { get; set; }
+
+
+        public Color(int R, int G, int B, int A)
+        {
+            this.Red = R;
+            this.Green = G;
+            this.Blue = B;
+            this.Alpha = Alpha;
+        }
+
+        public Color(int R, int G, int B)
+        {
+            this.Red = R;
+            this.Green = G;
+            this.Blue = B;
+            this.Alpha = 255;
+        }
+
+        public int GetGrayScale(int R, int G, int B)
+        {
+            int GrayScale = (R + G + B) / 3;
+            Console.WriteLine("The ball is thrown {0} times" + GrayScale);
+            return GrayScale;
+        }
+    }
+}
+
+
